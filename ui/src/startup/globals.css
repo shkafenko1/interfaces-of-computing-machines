@@ -1,0 +1,77 @@
+@font-face {
+    font-family: 'Minecraft';
+    src: url('../fonts/MinecraftTen-VGORe.ttf');
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'Minecraftia';
+    src: url('../fonts/Minecraftia-Regular.ttf');
+}
+
+body {
+    background-image: url('../../public/background.gif');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 100px;
+}
+
+.title {
+    font-family: 'Minecraft';
+    font-size: 100px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    color: aliceblue;
+}
+
+.button_grid {
+    display: grid;
+    grid-template-columns: 40% 40%;
+    grid-template-rows: 33% 33% 33%;
+    justify-items: center;
+    row-gap: 20px;
+    column-gap: 100px;
+}
+
+.mc-button {
+    width: 200px;
+    height: 40px;
+    cursor: pointer;
+    overflow: hidden;
+    white-space: nowrap;
+    user-select: none;
+    background: #999 url('https://i.ibb.co/rb2TWXL/bgbtn.png') center / cover;
+    image-rendering: pixelated;
+    border: 2px solid #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #DDD;
+    text-shadow: 2px 2px #000A;
+    box-shadow: inset -2px -4px #0006, inset 2px 2px #FFF7;
+}
+
+.mc-button:hover {
+    background-color: rgba(100, 100, 255, .45);
+    text-shadow: 2px 2px #202013CC;
+    color: #FFFFA0;
+}
+
+.mc-button:active {
+    box-shadow: inset -2px -4px #0004, inset 2px 2px #FFF5;
+}
+
+.cowmenu {
+	width: 250px;
+}
+
+.cowmenu:hover {
+    cursor: pointer;
+}
