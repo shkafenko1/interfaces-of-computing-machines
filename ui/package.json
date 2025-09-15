@@ -20,5 +20,13 @@
   },
   "dependencies": {
     "npx": "^10.2.2"
+  },
+  "build": {
+    "extraResources": [
+      {
+        "from": "src/lab1/main.exe",
+        "to": "main.exe"
+      }
+    ]
   }
 }

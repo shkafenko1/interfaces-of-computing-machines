@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>LAB1: Battery</title>
+    <link rel="stylesheet" href="lab1.css">
+</head>
+<body>
+    <div class="title"><span>Battery Status</span></div>
+    <div class="info-grid">
+        <div class="info-item">
+            <span class="info-label">Power Source:</span>
+            <span id="powerSource" class="info-value">Loading...</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">Battery Type:</span>
+            <span id="batteryType" class="info-value">Loading...</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">Charge Level:</span>
+            <span id="batteryLevel" class="info-value">Loading...</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">Estimated Full Runtime:</span>
+            <span id="fullRuntime" class="info-value">Loading...</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">Remaining Runtime:</span>
+            <span id="remainingTime" class="info-value">Loading...</span>
+        </div>
+    </div>
+    <div class="controls-grid">
+        <button id="sleepBtn" class="mc-button">Sleep</button>
+        <button id="hibernateBtn" class="mc-button">Hibernate</button>
+    </div>
+     <div class="cow-container">
+      <img src="../../public/cow.gif" alt="cow" class="cow">
+    </div>
+    <div><a href="../startup/index.html"><button class="mc-button">Back</button></a></div>
+    <script src="lab1.js"></script>
+</body>
+</html>

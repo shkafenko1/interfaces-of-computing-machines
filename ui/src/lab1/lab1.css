@@ -3,14 +3,13 @@
     src: url('../fonts/MinecraftTen-VGORe.ttf');
     font-weight: normal;
 }
-
 @font-face {
     font-family: 'Minecraftia';
     src: url('../fonts/Minecraftia-Regular.ttf');
 }
 
 body {
-    background-image: url('../../public/background.gif');
+    background-image: url('../../public/labBG.webp');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -23,23 +22,38 @@ body {
 }
 
 .title {
+    padding-top: 40px;
     font-family: 'Minecraft';
-    font-size: 100px;
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    color: aliceblue;
+    color: white;
+    font-size: 48px;
 }
-
-.button_grid {
+.info-grid {
     display: grid;
-    grid-template-columns: 40% 40%;
-    grid-template-rows: 33% 33% 33%;
-    justify-items: center;
-    row-gap: 20px;
-    column-gap: 100px;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 80px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 30px;
+    border: 2px solid #000;
+    font-size: 20px;
 }
-
+.info-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.info-label {
+    color: #DDD;
+    font-size: 16px;
+}
+.info-value {
+    color: #FFFFA0;
+    font-size: 24px;
+}
+.controls-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
 .mc-button {
     width: 200px;
     height: 40px;
@@ -71,12 +85,15 @@ body {
 
 .mc-button:active {
     box-shadow: inset -2px -4px #0004, inset 2px 2px #FFF5;
+}   
+
+.cow-container {
+    position: absolute;
+    right: 50px;
+    bottom: 300px;
 }
 
-.cowmenu {
-	width: 250px;
-}
-
-.cowmenu:hover {
-    cursor: pointer;
+.cow {
+    width: 250px;
+    height: 250px;
 }
