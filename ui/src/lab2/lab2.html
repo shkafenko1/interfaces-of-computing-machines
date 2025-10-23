@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LAB2: PCI DEVICES</title>
+    <link rel="stylesheet" href="lab2.css">
+</head>
+<body>
+    <div class="lab">
+        <div class="title">PCI DEVICES</div>
+        <div class="dev-table">
+            <table id="dev-table">
+                <thead id="dev-head">
+                    <tr>
+                        <th>Device ID</th>
+                        <th>Vendor ID</th>
+                    </tr>
+                </thead>
+                <tbody id="dev-body">
+                    <tr>
+                        <td colspan="2" class="loading">Loading devices data...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div><a href="../startup/index.html"><button class="mc-button">Back</button></a></div>
+        <div class="cow-container">
+            <img src="../../public/cow.gif" alt="cow" class="cow" id="cow-still">
+        </div>
+    </div>
+    <img src="../../public/cowalk.gif" alt="walking cow" id="cow-walk">
+    <canvas id="cow" width="1920px" height="1080px"></canvas>
+    <script src="lab2.js"></script>
+</body>
+</html>

@@ -13,7 +13,6 @@
 #pragma comment(lib, "powrprof.lib")
 #pragma comment(lib, "setupapi.lib")
 
-// --- Definitions manually added from missing batclass.h header ---
 #define IOCTL_BATTERY_QUERY_TAG CTL_CODE(FILE_DEVICE_BATTERY, 0x10, METHOD_BUFFERED, FILE_READ_ACCESS)
 #define IOCTL_BATTERY_QUERY_INFORMATION CTL_CODE(FILE_DEVICE_BATTERY, 0x11, METHOD_BUFFERED, FILE_READ_ACCESS)
 
@@ -39,10 +38,7 @@ typedef struct _BATTERY_INFORMATION {
     ULONG CriticalBias;
     ULONG CycleCount;
 } BATTERY_INFORMATION, *PBATTERY_INFORMATION;
-// --- End of definitions from batclass.h ---
 
-
-// Converts the AC Line Status code to a human-readable string.
 std::string getACLineStatusString(UCHAR status) {
     switch (status) {
         case 0: return "Offline";
@@ -51,7 +47,6 @@ std::string getACLineStatusString(UCHAR status) {
     }
 }
 
-// Gets the battery chemistry type (e.g., "LION").
 std::string getBatteryChemistry() {
     HDEVINFO hdev = SetupDiGetClassDevs(&GUID_DEVCLASS_BATTERY, 0, 0, DIGCF_PRESENT | DIGCF_DEVICEINTERFACE);
     if (hdev == INVALID_HANDLE_VALUE) return "N/A";
@@ -101,7 +96,6 @@ std::string getBatteryChemistry() {
     return "N/A";
 }
 
-// Listens for "sleep" or "hibernate" commands from stdin.
 void listenForCommands() {
     std::string line;
     while (std::cin >> line) {

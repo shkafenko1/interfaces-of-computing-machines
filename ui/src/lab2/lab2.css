@@ -1,0 +1,111 @@
+@font-face {
+    font-family: 'Minecraft';
+    src: url('../fonts/MinecraftTen-VGORe.ttf');
+    font-weight: normal;
+}
+@font-face {
+    font-family: 'Minecraftia';
+    src: url('../fonts/Minecraftia-Regular.ttf');
+}
+
+body {
+    background-image: url('../../public/labBG.webp');
+    background-position: center;
+    background-size: cover;
+    margin: 0;
+    overflow: hidden; /* Prevents scrollbars from appearing during animation */
+}
+
+.lab {  
+    position: fixed;
+    min-height: 100vh;
+    min-width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 100px;
+}
+
+#cow {
+    position: fixed;
+    min-height: 100vh;
+    min-width: 100vw;
+    z-index: -1; /* Place canvas behind other elements */
+}
+
+.title {
+    padding-top: 40px;
+    font-family: 'Minecraft';
+    color: white;
+    font-size: 48px;
+}
+
+.mc-button {
+    width: 200px;
+    height: 40px;
+    cursor: pointer;
+    overflow: hidden;
+    white-space: nowrap;
+    user-select: none;
+    background: #999 center / cover;
+    image-rendering: pixelated;
+    border: 2px solid #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #DDD;
+    text-shadow: 2px 2px #000A;
+    box-shadow: inset -2px -4px #0006, inset 2px 2px #FFF7;
+}
+
+.mc-button a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.mc-button:hover {
+    background-color: rgba(100, 100, 255, .45);
+    text-shadow: 2px 2px #202013CC;
+    color: #FFFFA0;
+}
+
+.mc-button:active {
+    box-shadow: inset -2px -4px #0004, inset 2px 2px #FFF5;
+}
+
+.dev-table {
+    gap: 20px 80px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 30px;
+    border: 2px solid #000;
+    font-size: 20px;
+}
+
+#dev-head{
+    color: #DDD;
+    font-size: 24px;
+}
+
+#dev-body{
+    color: #FFFFA0;
+    font-size:  16px;
+}
+
+.cow-container {
+    position: absolute;
+    right: 50px;
+    bottom: 300px;
+}
+
+#cow-still {
+    visibility: hidden;
+}
+
+#cow-walk {
+    position: absolute;
+    left: -300px;
+    bottom: 300px;
+    width: 500px;
+    height: auto;
+    transition: left 0.5s ease-out, bottom 0.5s ease-out; 
+}
