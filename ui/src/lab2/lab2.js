@@ -4,15 +4,12 @@ async function runXP() {
 
 async function readPCIData() {
     try {
-        await runXP();
-        const response = await fetch('D:\\studies\\interfaces\\shared xp\\pci_devices.txt');
+        const response = await fetch('D:\\studies\\interfaces\\shared xp\\pci_devices.json');
         if (!response.ok) {
-            throw new Error("no file(");
+            throw new Error("Could not fetch pci_devices.json. The file may not exist yet.");
         }
-        const rawPCIData = await response.text();
-        const PCIJSON = JSON.parse(rawPCIData);
-        const PCIData = PCIJSON.devices;
-        return PCIData;
+        const pciJson = await response.json();
+        return pciJson.devices;
     } catch (error) {
         console.error(error);
         return [];
@@ -20,32 +17,83 @@ async function readPCIData() {
 }
 
 function createPCITable(devices) {
-    const tbody = document.getElementById('dev-body');
-    if (devices.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="2" class="loading">No devices found.</td></tr>';
+    const table = document.getElementById('dev-table');
+    const thead = table.querySelector('thead');
+    const tbody = table.querySelector('tbody');
+
+    thead.innerHTML = '';
+    tbody.innerHTML = '';
+
+    if (!devices || devices.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="1" class="loading">No devices found.</td></tr>';
         return;
     }
-    const rows = devices.map(device => `
-        <tr>
-            <td>${device.DeviceID}</td>
-            <td>${device.VendorID}</td>
-        </tr>
-    `).join('');
-    tbody.innerHTML = rows;
+
+    const headers = Object.keys(devices[0]);
+    
+    const headerRow = document.createElement('tr');
+    headers.forEach(headerText => {
+        const th = document.createElement('th');
+        th.textContent = headerText;
+        headerRow.appendChild(th);
+    });
+    thead.appendChild(headerRow);
+
+    const rows = devices.map(device => {
+        const tr = document.createElement('tr');
+        headers.forEach(header => {
+            const td = document.createElement('td');
+            td.textContent = device[header] !== undefined ? device[header] : 'N/A';
+            tr.appendChild(td);
+        });
+        return tr;
+    });
+
+    rows.forEach(row => tbody.appendChild(row));
 }
 
-document.addEventListener('DOMContentLoaded', async () => {
-    const cowWalk = document.getElementById('cow-walk');
-    const cowStill = document.getElementById('cow-still');
-    const cowContainer = document.querySelector('.cow-container');
+async function loadAndDisplayData() {
+    const tbody = document.getElementById('dev-body');
+    const thead = document.getElementById('dev-head');
 
-    let animationFrameId;
+    thead.innerHTML = '';
+    tbody.innerHTML = '<tr><td colspan="1" class="loading">Refreshing devices data...</td></tr>';
+
+    try {
+        const devices = await readPCIData();
+        createPCITable(devices);
+    } catch (error) {
+        console.error(error.message);
+        tbody.innerHTML = `<tr><td colspan="1" class="loading">Error loading data: ${error.message}</td></tr>`;
+    }
+}
+
+async function handleRunXP() {
+    const runButton = document.getElementById('run-xp-button');
+    runButton.disabled = true;
+    runButton.textContent = 'Running...';
+    
+    try {
+        await runXP();
+        await loadAndDisplayData();
+    } catch (error) {
+        console.error("Failed to run XP script:", error);
+    } finally {
+        runButton.disabled = false;
+        runButton.textContent = 'Run XP';
+    }
+}
+
+function startCowAnimation() {
+    const cowWalk = document.getElementById('cow-walk');
+    cowWalk.style.left = '0px';
+
     let direction = 'right';
-    const speed = 10;
+    const speed = 0.7;
 
     const animateCow = () => {
         const cowRect = cowWalk.getBoundingClientRect();
-        let currentLeft = cowRect.left;
+        let currentLeft = parseFloat(cowWalk.style.left);
 
         if (direction === 'right') {
             currentLeft += speed;
@@ -62,31 +110,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         cowWalk.style.left = currentLeft + 'px';
-        animationFrameId = requestAnimationFrame(animateCow);
+        requestAnimationFrame(animateCow);
     };
 
-    cowWalk.style.left = '0px';
-    cowWalk.style.display = 'block';
     animateCow();
+}
 
-    try {
-        const devices = await readPCIData();
-        createPCITable(devices);
-    } catch (error) {
-        console.error(error.message);
-    } finally {
-        cancelAnimationFrame(animationFrameId);
-        cowWalk.style.transform = 'scaleX(1)';
+document.addEventListener('DOMContentLoaded', () => {
+    startCowAnimation();
 
-        const containerRect = cowContainer.getBoundingClientRect();
-        const stillCowRect = cowStill.getBoundingClientRect();
-
-        cowWalk.style.left = (containerRect.left + (containerRect.width - stillCowRect.width) / 2) + 'px';
-        cowWalk.style.bottom = (window.innerHeight - containerRect.bottom + (containerRect.height - stillCowRect.height) / 2) + 'px';
-
-        setTimeout(() => {
-            cowWalk.style.display = 'none';
-            cowStill.style.visibility = 'visible';
-        }, 500);
-    }
+    loadAndDisplayData();
+    
+    document.getElementById('run-xp-button').addEventListener('click', handleRunXP);
+    document.getElementById('refresh-button').addEventListener('click', loadAndDisplayData);
 });
