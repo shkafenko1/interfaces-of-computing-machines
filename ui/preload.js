@@ -3,7 +3,7 @@ const { exec } = require('child_process');
 const path = require('path');
 
 contextBridge.exposeInMainWorld('electronAPI', {
-  startCpp: () => ipcRenderer.send('start-cpp'),
+  startCpp: (labNumber) => ipcRenderer.send('start-cpp', labNumber),
   sendCommand: (command) => ipcRenderer.send('send-command-to-cpp', command),
   onCppData: (callback) => ipcRenderer.on('cpp-data', (event, data) => callback(data)),
   runXP: () => {

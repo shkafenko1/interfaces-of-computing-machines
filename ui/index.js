@@ -18,13 +18,23 @@ const createWindow = () => {
     }
   });
 
-  ipcMain.on('start-cpp', () => {
+  ipcMain.on('start-cpp', (event, labNumber) => {
+    if (cppProcess) {
+      cppProcess.kill();
+      cppProcess = null;
+    }
+
     let exePath;
+    const lab = labNumber || 'lab1';
     
     if (app.isPackaged) {
-      exePath = path.join(process.resourcesPath, 'main.exe');
+      exePath = path.join(process.resourcesPath, lab === 'lab4' ? 'webcam.exe' : 'main.exe');
     } else {
-      exePath = path.join(__dirname, 'src', 'lab1', 'main.exe');
+      if (lab === 'lab4') {
+        exePath = path.join(__dirname, 'src', 'lab4', 'webcam.exe');
+      } else {
+        exePath = path.join(__dirname, 'src', 'lab1', 'main.exe');
+      }
     }
 
     cppProcess = spawn(exePath);

@@ -27,6 +27,10 @@
       {
         "from": "src/lab1/main.exe",
         "to": "main.exe"
+      },
+      {
+        "from": "src/lab4/webcam.exe",
+        "to": "webcam.exe"
       }
     ]
   }
