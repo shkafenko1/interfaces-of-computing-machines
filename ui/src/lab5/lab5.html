@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LAB5: USB MONITOR</title>
+    <link rel="stylesheet" href="lab5.css">
+</head>
+<body>
+    <div class="lab">
+        <div class="title">USB MONITOR</div>
+
+        <section class="panels">
+            <div class="panel monitor-panel">
+                <div class="panel-header">
+                    <div>
+                        <div class="panel-title">Connected devices</div>
+                        <div class="panel-subtitle">Live feed from USB bus events</div>
+                    </div>
+                    <span id="deviceCounter" class="pill">0 devices</span>
+                </div>
+                <div class="list-header">
+                    <span>Device Name</span>
+                    <span>Type</span>
+                    <span>Status</span>
+                    <span>Actions</span>
+                </div>
+                <div id="deviceList" class="device-list">
+                    <div class="loading-text">Scanning for devices...</div>
+                </div>
+            </div>
+
+            <div class="panel log-panel">
+                <div class="panel-header">
+                    <div>
+                        <div class="panel-title">Event console</div>
+                        <div class="panel-subtitle">Arrival, removal, safe-eject</div>
+                    </div>
+                    <span class="pill ghost">Live</span>
+                </div>
+                <div class="log-console" id="logConsole">
+                    <div class="log-entry">System: USB Monitor Module Loaded.</div>
+                </div>
+            </div>
+        </section>
+
+        <div class="controls-grid">
+            <button id="refreshBtn" class="mc-button">Rescan USB</button>
+            <button id="clearLogBtn" class="mc-button">Clear log</button>
+            <a href="../startup/index.html"><button class="mc-button">Back</button></a>
+        </div>
+
+        <div id="statusMessage" class="status-message"></div>
+    </div>
+    
+    <img src="../../public/cowalk.gif" alt="walking cow" id="cow-walk">
+    <script src="lab5.js"></script>
+</body>
+</html>

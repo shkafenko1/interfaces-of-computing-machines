@@ -6,6 +6,30 @@ app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required');
 
 let cppProcess = null;
 
+const EXECUTABLES = {
+  default: {
+    dev: path.join(__dirname, 'src', 'lab1', 'main.exe'),
+    prod: path.join(process.resourcesPath, 'main.exe')
+  },
+  lab1: {
+    dev: path.join(__dirname, 'src', 'lab1', 'main.exe'),
+    prod: path.join(process.resourcesPath, 'main.exe')
+  },
+  lab4: {
+    dev: path.join(__dirname, 'src', 'lab4', 'webcam.exe'),
+    prod: path.join(process.resourcesPath, 'webcam.exe')
+  },
+  lab5: {
+    dev: path.join(__dirname, 'src', 'lab5', 'lab5.exe'),
+    prod: path.join(process.resourcesPath, 'lab5.exe')
+  }
+};
+
+const resolveExecutable = (labNumber) => {
+  const entry = EXECUTABLES[labNumber] || EXECUTABLES.default;
+  return app.isPackaged ? entry.prod : entry.dev;
+};
+
 const createWindow = () => {
   const win = new BrowserWindow({
     width: 800,
@@ -18,27 +42,40 @@ const createWindow = () => {
     }
   });
 
-  ipcMain.on('start-cpp', (event, labNumber) => {
+  const sendProcessError = (message) => {
+    if (win && win.webContents) {
+      win.webContents.send('cpp-data', JSON.stringify({
+        type: 'log',
+        level: 'error',
+        message
+      }));
+    }
+  };
+
+  ipcMain.on('start-cpp', (_event, labNumber) => {
     if (cppProcess) {
       cppProcess.kill();
       cppProcess = null;
     }
 
-    let exePath;
-    const lab = labNumber || 'lab1';
-    
-    if (app.isPackaged) {
-      exePath = path.join(process.resourcesPath, lab === 'lab4' ? 'webcam.exe' : 'main.exe');
-    } else {
-      if (lab === 'lab4') {
-        exePath = path.join(__dirname, 'src', 'lab4', 'webcam.exe');
-      } else {
-        exePath = path.join(__dirname, 'src', 'lab1', 'main.exe');
-      }
-    }
+    const exePath = resolveExecutable(labNumber);
 
-    cppProcess = spawn(exePath);
+    try {
+      cppProcess = spawn(exePath);
+    } catch (error) {
+      cppProcess = null;
+      const logMessage = `Failed to launch helper (${labNumber || 'lab1'}): ${error.message}`;
+      console.error(logMessage);
+      sendProcessError(logMessage);
+      return;
+    }
     let buffer = '';
+
+    cppProcess.on('error', (error) => {
+      console.error(`C++ process error: ${error.message}`);
+      sendProcessError(`Helper error: ${error.message}`);
+      cppProcess = null;
+    });
 
     cppProcess.stdout.on('data', (data) => {
       buffer += data.toString();
